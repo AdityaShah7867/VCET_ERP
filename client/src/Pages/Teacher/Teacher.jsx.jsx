@@ -113,8 +113,8 @@ const Home = () => {
 
           <tbody className="text-sm divide-y divide-gray-100">
            
-             
-                <tr>
+          {products.map((product) => (      
+                <tr key={product._id} className="bg-white shadow-lg rounded-lg">
                   <td className="p-2 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
@@ -127,7 +127,7 @@ const Home = () => {
                         />
                       </div>
                       <div className="font-medium text-gray-800">
-                        ADITYA SHAH
+                        USER NAME 
                       </div>
                     </div>
                   </td>
@@ -136,11 +136,11 @@ const Home = () => {
                   </td> */}
                   <td className="p-2 whitespace-nowrap">
                     <div className="text-left font-medium text-green-500">
-                      OSCIALLATION
+                    {product.name}
                     </div>
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    <div className="text-lg text-center">1st</div>
+                    <div className="text-lg text-center">{product.price}</div>
                   </td>
                   <td className="py-3 px-6 text-center">
                     <span
@@ -154,6 +154,7 @@ const Home = () => {
                     </div>
                   </td>
            </tr>
+             ))}
            
           </tbody>
         </table>
