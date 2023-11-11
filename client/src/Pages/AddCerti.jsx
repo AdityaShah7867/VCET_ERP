@@ -19,17 +19,21 @@ const AddP = () => {
       formData.append("desc", desc);
       formData.append("file", file); // Append file to FormData
 
-      const response = await axios.post(`${baseURL}/v1/product/AddP`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
-        },
-      });
+      const response = await axios.post(
+        `${baseURL}/v1/product/AddP`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type for file upload
+          },
+        }
+      );
 
       const { message, Token } = response.data;
 
       if (response.status === 201) {
         // navigate('/home');
-        toast.success("Product successful!");
+        toast.success("Certificate uploaded successfully");
         localStorage.setItem("token", Token);
       } else {
         toast.error("Product add failed");
@@ -41,7 +45,9 @@ const AddP = () => {
   };
   return (
     <div className="">
-      <h1 className="text-2xl text-center mt-8 ">Add Products here</h1>
+      <h1 className="text-2xl text-center mt-8 ">
+        Please Upload All Your Certificates Here!
+      </h1>
 
       <div>
         <div className="max-w-lg lg:ms-auto mx-auto text-center ">
@@ -55,31 +61,43 @@ const AddP = () => {
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="name"
+                    placeholder="Competition Name"
                     className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                   />
                 </div>
                 <div className="md:col-span-2">
+
+                  <label>SELECT POSITION</label>
+
+                  {/* <select id="cars" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" name="cars">
+
+                    <option value="volvo">1st</option>
+                    <option value="saab">2nd</option>
+                    <option value="fiat">3rd</option>
+                    <option value="audi">Particiaption</option>
+                  </select> */}
+
+
                   <input
-                    type="number"
+                    type="text"
                     value={price}
                     id="price"
                     name="price"
                     onChange={(e) => setPrice(e.target.value)}
-                    placeholder="price"
+                    placeholder="Position"
                     className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                <input
-            type="file"
-            id="file"
-            name="file"
-            placeholder="Charger votre fichier"
-            className="peer block w-full appearance-none border-none   bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
-            onChange={(e) => setFile(e.target.files[0])} // Handle file change
-          />
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    placeholder="Charger votre fichier"
+                    className="peer block w-full appearance-none border-none   bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
+                    onChange={(e) => setFile(e.target.files[0])} // Handle file change
+                  />
                 </div>
                 <div className="md:col-span-2">
                   <textarea
@@ -98,9 +116,9 @@ const AddP = () => {
                   <button
                     type="submit"
                     class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                    style={{backgroundColor:"blue"}}
+                    style={{ backgroundColor: "blue" }}
                   >
-                    ADD PRODUCT
+                    ADD CERTIFICATE
                   </button>
                 </div>
               </div>

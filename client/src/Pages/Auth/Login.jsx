@@ -69,7 +69,7 @@ const Login = () => {
                   class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                 />
                 <div className="text-center">
-                  <button class="btn text-center " type=""> LOGIN </button>
+                  <button class="btn text-center " > LOGIN </button>
                 </div>
               </div>
             </form>

@@ -11,7 +11,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = async (e) => {
-    navigate("/login");
+    navigate("/");
     localStorage.removeItem("token");
   };
 
@@ -82,24 +82,19 @@ const Navbar = () => {
               Home
             </a>
             <a
-              href="./addp"
+              href="./add"
               className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
-              Add Products
+              Upload Certificate
             </a>
-            <a
-              href="./cart"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-            >
-              Cart
-            </a>
+           
            {admin.isAdmin !== false?
 
             <a
               href="./admin"
               className="block ml-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
             >
-              Admin
+              TEACHERS DASHBOARD
             </a>
           :null}
           </div>
