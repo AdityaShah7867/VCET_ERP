@@ -1,0 +1,56 @@
+button {
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: dodgerblue;
+    color: black;
+    border-radius: 4px;
+   }
+   
+   button:hover {
+    background: rgb(29, 19, 212);
+    background: linear-gradient(90deg, rgba(30,144,255,1) 0%, rgba(0,212,255,1) 100%);
+   }
+   
+   button:active {
+    transform: translate(0em, 0.2em);
+   }
+
+
+
+
+.abc {
+
+    background-image: url();
+    background-repeat: no-repeat; /* This prevents the background image from repeating */
+    background-position: center; /* This centers the background image within the container */
+    height: 100vh; /* Set the height of the container to 100% of the viewport height */
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain; /* This ensures that the entire background image is contained within the container, without cropping */
+    
+
+}
+
+/* Media query for screens with a minimum width of, for example, 768 pixels */
+@media screen and (min-width: 768px) {
+    .abc {
+
+    background-image: url('../Images/bg-2.png');
+    background-repeat: no-repeat; /* This prevents the background image from repeating */
+    background-position: center; /* This centers the background image within the container */
+    height: 100vh; /* Set the height of the container to 100% of the viewport height */
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain; /* This ensures that the entire background image is contained within the container, without cropping */
+
+}}
+
+.mainn{
+    margin-top: -25%;
+}
