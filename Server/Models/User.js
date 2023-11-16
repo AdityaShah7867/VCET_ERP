@@ -14,9 +14,17 @@ const userSchema = new mongoose.Schema(
             type: String,
             required:false
         },
-        isAdmin: {
+        userType: {
+            type: String,
+            enum:["teacher","student","admin"],
+            default:"student"
+        },
+        verificationToken:{
+            type: String
+        },
+        isVerified:{
             type: Boolean,
-            default: false  // Default value is false, meaning the user is not an admin by default
+            default:false
         }
     }
 )

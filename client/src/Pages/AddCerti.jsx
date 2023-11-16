@@ -3,12 +3,22 @@ import { baseURL } from "../Util/constant";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useAuth } from "../Context/Auth";
+import { useNavigate } from "react-router-dom";
 
 const AddP = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
+  const [auth] = useAuth();
+  const navigate = useNavigate();
+
+  if (auth?.user?.userType !== "student" || auth?.user?.userType !== "admin"){
+     
+    navigate('/thome');
+
+}
 
   const AddP = async (e) => {
     e.preventDefault();

@@ -3,19 +3,24 @@ import { Link } from 'react-router-dom';
 import { NavLink, useNavigate } from 'react-router-dom'
 import { baseURL } from "../../Util/constant";
 import axios from 'axios';
+import { useAuth } from '../../Context/Auth';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const [auth,setAuth] = useAuth()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = async (e) => {
+    setAuth({...auth,user:null,token:''})
     navigate("/");
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    localStorage.removeItem("auth");
   };
 
-  const [admin,setAdmin] = useState({});
+  const [user,setUser] = useState({});
 
 
     useEffect(()=>{
@@ -25,7 +30,7 @@ const Navbar = () => {
               Authorization: `Bearer ${localStorage.getItem('token')}`
             }})
             .then((res)=>{
-                setAdmin(res.data.user)
+                setUser(res.data.user)
                 console.log(res.data.user)
             }).catch((error)=>console.log(error))
     } ,[] )
@@ -73,7 +78,7 @@ const Navbar = () => {
             isOpen ? 'block' : 'hidden'
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
-          {localStorage.getItem("token") && (
+          {auth.user && (
           <div className="text-sm lg:flex-grow">
             <a
               href="./home"
@@ -87,19 +92,26 @@ const Navbar = () => {
             >
               Upload Certificate
             </a>
-           
-           {admin.isAdmin !== false?
 
             <a
-              href="./admin"
+              href="./shome"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              Student Dashboard
+            </a>
+           
+          
+
+            <a
+              href="./thome"
               className="block ml-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
             >
               TEACHERS DASHBOARD
             </a>
-          :null}
+         
           </div>
         )}
-          {localStorage.getItem("token") ? (
+          { auth.user ? (
         <div>
           <a
             href="#"
@@ -112,7 +124,7 @@ const Navbar = () => {
       ): (
         <div className="ml-auto">
           <a
-            href="/login" // You should replace this with the actual login route
+            href="/" 
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
           >
             Login

@@ -9,9 +9,10 @@ import Addp from './Pages/AddCerti';
 import Land from '../src/Pages/Land';
 import Navbar from './Components/Navbar/Navbar'
 // import Cart from './Pages/Cart';
-import Admin from './Pages/Teacher/Teacher.jsx';
+import Teacher from './Pages/Teacher/Teacher.jsx';
 import Shome from './Pages/Shome';
-import Thome from './Pages/Thome'
+import RequestDoc from './Pages/Teacher/RequestDoc.jsx';
+
 
 
 const App = () => {
@@ -37,9 +38,10 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/add" element={<Addp />} />
           {/* <Route path="/cart" element={<Cart />} /> */}
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/thome" element={<Teacher />} />
           <Route path="/shome" element={<Shome />} />
-          <Route path="/thome" element={<Thome />} />
+          <Route path="/request" element={<RequestDoc />} />
+
 
         </Route>
 

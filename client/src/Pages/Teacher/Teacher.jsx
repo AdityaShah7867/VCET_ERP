@@ -4,8 +4,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Home = () => {
+const Teacher = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   
 
@@ -144,7 +145,8 @@ const Home = () => {
                   </td>
                   <td className="py-3 px-6 text-center">
                     <span
-                      className='600 py-1 px-3 rounded-full text-xs'>
+                      className='600 py-1 px-3 rounded-full text-xs cursor-pointer border-2 border-hray-500 p-2'
+                      onClick={() => setSelectedProduct(product)}>
                       VIEW
                     </span>
                   </td>
@@ -154,7 +156,10 @@ const Home = () => {
                     </div>
                   </td>
            </tr>
-             ))}
+               
+      
+          ))}
+                     
            
           </tbody>
         </table>
@@ -163,6 +168,20 @@ const Home = () => {
   </div>
 </div>
 </section>
+
+{selectedProduct && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg">
+            <img
+              src={`http://localhost:4000/uploads/${selectedProduct.file}`}
+              alt={selectedProduct.name}
+              className="w-full h-48 object-cover mb-4"
+            />
+            {/* Add other modal content if needed */}
+            <button onClick={() => setSelectedProduct(null)}>Close Modal</button>
+          </div>
+        </div>
+      )}
 
 
 
@@ -180,7 +199,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Teacher;
 
 
 

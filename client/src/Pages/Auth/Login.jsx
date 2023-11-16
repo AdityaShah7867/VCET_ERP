@@ -7,29 +7,79 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../../Stylesheets/Login.css";
 import Logo from "../../Images/vcet-logo.png";
 import bg from "../../Images/bg-2.png";
+import { useAuth } from "../../Context/Auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [auth,setAuth]=useAuth()
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${baseURL}/v1/auth/login`, {
-        email,
-        password,
-      });
+      // const response = await axios.post(`${baseURL}/v1/auth/login`, {
+      //   email,
+      //   password,
+      // });
 
-      const { message, token } = response.data;
+      const response = await fetch (`${baseURL}/v1/auth/login`,{
+        method : "POST", 
+        headers : {'Content-Type':'application/json'},
+        body : JSON.stringify({
+          email : email,
+          password : password
+        })
+      })
 
+      console.log("1");
+      // const { message, token } = response.data;
+      if (response.status === 400) {
+        console.log("hello")
+        toast.error("Please Verify Email First !");
+        return
+      }
+      
       if (response.status === 200) {
-        navigate("/home");
-        toast.success("Login successful!");
-        localStorage.setItem("token", token);
-      } else {
+
+        const data = await response.json()
+        localStorage.setItem('auth',JSON.stringify(data))
+        setAuth({...auth,user:data.user,token:data.token})
+        console.log(data);
+        console.log(localStorage.getItem('auth'));
+        
+
+        if (data?.user.userType === "student"){
+          navigate("/shome")
+          toast.success("Student Login successful!");
+          return
+        }
+
+        if (data.user.userType === "teacher"){
+          navigate("/thome")
+          toast.success(" Teacher Login successful!");
+          return
+        }
+
+        if (data.user.userType === "admin"){
+          navigate("/home")
+          toast.success(" Admin Login successful!");
+          return
+        }
+
+      //   navigate("/home");
+      //   // localStorage.setItem('token',token)
+      //   toast.success("Login successful!");
+      //   return
+      }
+
+     
+      
+      else {
         toast.error("Invalid email or password");
+        return
       }
     } catch (error) {
       console.error(error);

@@ -6,8 +6,7 @@ require('dotenv').config();
 const AuthRoutes =  require('./Routes/Auth')
 const ProductRoutes = require('./Routes/Product')
 const CartRoutes = require('./Routes/Cart')
-
-
+const MailRoutes = require('./Routes/Mail')
 
 const app = express();
 app.use(cors())
@@ -23,7 +22,9 @@ mongoose
 app.use('/api/v1/auth',AuthRoutes)
 app.use('/api/v1/product',ProductRoutes)
 app.use('/api/v1/cart',CartRoutes)
+app.use('/api/v1/mail',MailRoutes)
 app.use('/uploads', express.static('uploads'));
+
 
 
 app.listen(PORT, () => {console.log(`Server is running on port: ${PORT}`)});
