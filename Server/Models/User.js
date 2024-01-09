@@ -1,31 +1,39 @@
 const mongoose = require('mongoose')
+const { certificates } = require('./Certification.models')
 
 const userSchema = new mongoose.Schema(
     {
-        email:{
+        email: {
             type: String,
-            required:true
+            required: true
         },
-        password:{
+        password: {
             type: String,
-            required:true
+            required: true
         },
-        name:{
+        name: {
             type: String,
-            required:false
+            required: false
         },
         userType: {
             type: String,
-            enum:["teacher","student","admin"],
-            default:"student"
+            enum: ["teacher", "student", "admin"],
+            default: "student"
         },
-        verificationToken:{
+        verificationToken: {
             type: String
         },
-        isVerified:{
+        isVerified: {
             type: Boolean,
-            default:false
-        }
+            default: false
+        },
+        certificates: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Certificates'
+            }
+        ]
+
     }
 )
 
