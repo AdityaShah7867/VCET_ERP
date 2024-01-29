@@ -217,6 +217,16 @@ const getAllCertificatesAdmin = async (req, res) => {
     }
 }
 
+
+const requestCertificate = async (req, res) => {
+    const { email, certificate } = req.body;
+    try {
+
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     createCertificates,
     verifyCertificate,

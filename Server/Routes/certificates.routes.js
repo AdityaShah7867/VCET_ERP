@@ -13,5 +13,7 @@ router.get('/getAllCertificates', verifyToken, getAllCertificates)
 router.get('/getAllCertificatesAdmin', verifyToken, getAllCertificatesAdmin)
 
 
-module.exports = router
+
+module.exports = router;
+
 

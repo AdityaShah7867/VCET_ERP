@@ -13,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [auth,setAuth]=useAuth()
+  const [auth, setAuth] = useAuth()
 
 
   const handleLogin = async (e) => {
@@ -25,12 +25,12 @@ const Login = () => {
       //   password,
       // });
 
-      const response = await fetch (`${baseURL}/v1/auth/login`,{
-        method : "POST", 
-        headers : {'Content-Type':'application/json'},
-        body : JSON.stringify({
-          email : email,
-          password : password
+      const response = await fetch(`${baseURL}/v1/auth/login`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          password: password
         })
       })
 
@@ -41,42 +41,42 @@ const Login = () => {
         toast.error("Please Verify Email First !");
         return
       }
-      
+
       if (response.status === 200) {
 
         const data = await response.json()
-        localStorage.setItem('auth',JSON.stringify(data))
-        setAuth({...auth,user:data.user,token:data.token})
+        localStorage.setItem('auth', JSON.stringify(data))
+        setAuth({ ...auth, user: data.user, token: data.token })
         console.log(data);
         console.log(localStorage.getItem('auth'));
-        
 
-        if (data?.user.userType === "student"){
+
+        if (data?.user.userType === "student") {
           navigate("/shome")
           toast.success("Student Login successful!");
           return
         }
 
-        if (data.user.userType === "teacher"){
+        if (data.user.userType === "teacher") {
           navigate("/thome")
           toast.success(" Teacher Login successful!");
           return
         }
 
-        if (data.user.userType === "admin"){
+        if (data.user.userType === "admin") {
           navigate("/home")
           toast.success(" Admin Login successful!");
           return
         }
 
-      //   navigate("/home");
-      //   // localStorage.setItem('token',token)
-      //   toast.success("Login successful!");
-      //   return
+        //   navigate("/home");
+        //   // localStorage.setItem('token',token)
+        //   toast.success("Login successful!");
+        //   return
       }
 
-     
-      
+
+
       else {
         toast.error("Invalid email or password");
         return

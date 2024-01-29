@@ -1,7 +1,7 @@
 const User = require("../Models/User")
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt')
-const {generateverificationToken,sendVerificationEmail,SuccessfullyVerified}= require('../Util/mail')
+const { generateverificationToken, sendVerificationEmail, SuccessfullyVerified } = require('../Util/mail')
 
 
 const register = async (req, res) => {
@@ -34,7 +34,7 @@ const register = async (req, res) => {
         const verificationToken = generateverificationToken(email);
         console.log("verificationToken")
         const newUser = await User.create({
-            email:email.toLowerCase(),
+            email: email.toLowerCase(),
             password: hashedpassword,
             name,
             verificationToken
@@ -60,7 +60,7 @@ const verifyemail = async (req, res) => {
         user.verificationToken = null;
         await user.save();
         await SuccessfullyVerified(user.email);
-        res.status(200).json({message:"EMAIL VERIFIED"});
+        res.status(200).json({ message: "EMAIL VERIFIED" });
 
     } catch (error) {
         res.status(500).json({ error: 'An error occurred during email verification.' });
@@ -76,13 +76,15 @@ const login = async (req, res) => {
             email: email
         })
 
+        console.log(user)
+
         if (!user) {
             res.status(401).json({ message: "user does not exist" })
             return
         }
 
-        if (!user.isVerified){
-            res.status(400).json({message : "Please Verify Email First !"})
+        if (!user.isVerified) {
+            res.status(400).json({ message: "Please Verify Email First !" })
             return
         }
 
@@ -90,12 +92,12 @@ const login = async (req, res) => {
 
         if (comparepassword) {
             const token = jwt.sign({
-                id:user.id,
-                email:user.email,
-                name:user.name
-                
+                id: user.id,
+                email: user.email,
+                name: user.name
+
             }, process.env.JWT)
-            
+
             res.status(200).json({ message: "user lpgged in", user: user, token: token })
             return
         }
@@ -126,4 +128,4 @@ const getLoggedinUser = async (req, res) => {
 }
 
 
-module.exports = {register,login,getLoggedinUser,verifyemail}
+module.exports = { register, login, getLoggedinUser, verifyemail }
