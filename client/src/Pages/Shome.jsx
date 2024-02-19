@@ -12,6 +12,7 @@ import { useAuth } from "../Context/Auth";
 const Shome = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
+  
 
   // if (auth?.user?.userType !=="student" || auth?.user?.userType !=="admin"){
 
@@ -23,6 +24,11 @@ const Shome = () => {
   //   toast.success("nice");
   // }
 
+  const handlecerti = () => {
+    navigate("/add");
+  }
+ 
+
   return auth?.user?.userType === "teacher" ? (
     navigate("/thome") // Navigate to '/thome' if the user is a teacher
   ) : (
@@ -33,7 +39,8 @@ const Shome = () => {
             <h1 className="text-4xl font-semibold mb-2">Student Dashboard</h1>
           </div>
           <div className="flex flex-wrap items-start justify-end -mb-3">
-            <button className="inline-flex px-5 py-3 text-white bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 rounded-md ml-6 mb-3">
+            <button className="inline-flex px-5 py-3 text-white bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 rounded-md ml-6 mb-3"
+            onClick={handlecerti}>
               <svg
                 aria-hidden="true"
                 fill="none"
