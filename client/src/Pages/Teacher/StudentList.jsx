@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Teacher = () => {
+const StudentList = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -199,7 +199,7 @@ const Teacher = () => {
   );
 };
 
-export default Teacher;
+export default StudentList;
 
 
 

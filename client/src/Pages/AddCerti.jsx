@@ -14,11 +14,11 @@ const AddP = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
 
-  if (auth?.user?.userType !== "student" || auth?.user?.userType !== "admin"){
+//   if (auth?.user?.userType !== "student" || auth?.user?.userType !== "admin"){
      
-    navigate('/thome');
+//     navigate('/thome');
 
-}
+// }
 
   const AddP = async (e) => {
     e.preventDefault();
