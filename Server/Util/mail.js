@@ -16,7 +16,7 @@ const ReqDoc = async (TeacherName, recipientEmail, desc) => {
             }
         })
 
-        const emailcontent = ReqTemp(desc, TeacherName);
+        const emailcontent = ReqTemp(desc, TeacherName, 'http://localhost:3000/');
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: recipientEmail,

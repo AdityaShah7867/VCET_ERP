@@ -8,29 +8,31 @@ const RequestDoc = () => {
   const token = localStorage.getItem('token');
   const [email, setEmail] = useState("");
   const [desc, setDesc] = useState("");
+  const [loading, setLoading] = useState(false)
 
 
   const ReqDoc = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
-      const response = await axios.post(`${baseURL}/v1/mail/reqdoc`, {
+      const response = await axios.post(`${baseURL}/v1/certificates/requestCertificate`, {
         email,
         desc,
       }, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem('auth')}`,
         },
       });
-
       if (response.status === 201) {
-       
+
         toast.success("MAIL SENT SUCCESSFULLY");
-        
+        setLoading(false);
       }
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred");
+      setLoading(false);
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -38,7 +40,7 @@ const RequestDoc = () => {
   return (
     <div className="">
       <h1 className="text-2xl text-center mt-8 ">
-       REQUEST STUDENTS TO UPLOAD CERTIFICATES
+        REQUEST STUDENTS TO UPLOAD CERTIFICATES
       </h1>
 
       <div>
@@ -57,8 +59,8 @@ const RequestDoc = () => {
                     className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                   />
                 </div>
-                
-             
+
+
                 <div className="md:col-span-2">
                   <textarea
                     name="desc"
@@ -78,7 +80,7 @@ const RequestDoc = () => {
                     class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     style={{ backgroundColor: "blue" }}
                   >
-                    REQUEST CERTIFICATE
+                    {loading ? "Loading..." : "Request Certificate"}
                   </button>
                 </div>
               </div>

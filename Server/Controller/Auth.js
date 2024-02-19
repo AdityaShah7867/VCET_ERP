@@ -121,8 +121,8 @@ const getLoggedinUser = async (req, res) => {
 
         const user = req.user;
         // console.log(user)
-
-        res.status(200).json({ user: user })
+        const existingUser = await User.findById(user.id)
+        res.status(200).json({ user: existingUser })
     } catch (error) {
 
         res.status(501).json({ message: error })
@@ -139,6 +139,7 @@ const getStudentsByYear = async (req, res) => {
         res.status(501).json({ message: error })
     }
 }
+
 
 
 module.exports = { register, login, getLoggedinUser, verifyemail, getStudentsByYear }

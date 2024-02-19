@@ -23,6 +23,14 @@ const CertificatesSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    description: {
+        type: String,
+        required: true
+    },
+    position: {
+        type: String,
+        enum: ['1', '2', '3', 'Participation'],
+    },
 
 })
 

@@ -12,22 +12,56 @@ import { useAuth } from "../Context/Auth";
 const Shome = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
-  
+  const [certificates, setCertificates] = useState([]);
+  const [requestCertificate, setrequestCertificate] = useState([]);
 
-  // if (auth?.user?.userType !=="student" || auth?.user?.userType !=="admin"){
+  const getCertificates = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/v1/certificates/getAllCertificates`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth')}`,
+        },
+      });
+      console.log(response.data);
+      setCertificates(response.data.data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
+  }
 
-  //     // navigate('/thome');
-  //     toast.success("lol");
 
-  // }
-  // else{
-  //   toast.success("nice");
-  // }
+  const getCertificatesRequest = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/v1/certificates/getCertificateRequest`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth')}`,
+        },
+      });
+      console.log(response.data);
+      setrequestCertificate(response.data.data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
+
+  }
+
+
+  useEffect(() => {
+
+    getCertificates();
+    getCertificatesRequest();
+  }, []);
+
+
 
   const handlecerti = () => {
     navigate("/add");
   }
- 
+
+
+
 
   return auth?.user?.userType === "teacher" ? (
     navigate("/thome") // Navigate to '/thome' if the user is a teacher
@@ -40,7 +74,7 @@ const Shome = () => {
           </div>
           <div className="flex flex-wrap items-start justify-end -mb-3">
             <button className="inline-flex px-5 py-3 text-white bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 rounded-md ml-6 mb-3"
-            onClick={handlecerti}>
+              onClick={handlecerti}>
               <svg
                 aria-hidden="true"
                 fill="none"
@@ -59,7 +93,7 @@ const Shome = () => {
             </button>
           </div>
         </div>
-        <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {/* <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
           <div className="flex items-center p-8 bg-white shadow rounded-lg">
             <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
               <svg
@@ -151,7 +185,7 @@ const Shome = () => {
               <span className="block text-gray-500">Upcoming events</span>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
           <div className="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
@@ -164,7 +198,7 @@ const Shome = () => {
                   <img
                     src="https://avatars.githubusercontent.com/u/121731399?v=4"
                     alt="Student Image"
-                    className="max-h-48 max-w-48 rounded-md" // Adjust the values as needed
+                    className="max-h-48 max-w-48 rounded-md"
                   />
                 </div>
               </div>
@@ -179,13 +213,18 @@ const Shome = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-gray-600">Roll No:</label>
-                    <p className="text-gray-800 font-semibold">212104101</p>
+                    <label className="text-gray-600">ID:</label>
+                    <p className="text-gray-800 font-semibold">{
+                      auth?.user?._id
+
+                    }</p>
                   </div>
 
                   <div className="mb-4">
                     <label className="text-gray-600">Year:</label>
-                    <p className="text-gray-800 font-semibold">3rd / V sem</p>
+                    <p className="text-gray-800 font-semibold">{
+                      auth?.user?.year
+                    }</p>
                   </div>
 
                   <div className="mb-4">
@@ -259,90 +298,46 @@ const Shome = () => {
               <span>YOUR CERTIFICATES</span>
             </div>
             <div className="overflow-y-auto" style={{ maxHeight: "36rem" }}>
-              <ul className="p-6 space-y-6">
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-
-                <li className="flex items-center">
-                  <span className="font-semibold">Certifiate Name</span>
-                  <span className="ml-auto text-gray-700 ">View button</span>
-                </li>
-              </ul>
+              {
+                certificates.map((certificate) => (
+                  <div className="p-4 flex items-center justify-between border-b border-gray-100">
+                    <div>
+                      <p className="text-sm font-semibold"> {certificate.description} </p>
+                      <p className="text-xs text-gray-500"> {certificate.position} </p>
+                    </div>
+                    <div>
+                      <button onClick={() => {
+                        window.open(`http://localhost:4000/${certificate.file}`);
+                      }} className="text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md px-3 py-1 text-xs">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           </div>
           <div className="flex flex-col row-span-3 bg-white shadow rounded-lg">
             <div className="px-6 py-5 font-semibold border-b border-gray-100">
               TEACHER POSTED REQUEST
             </div>
-            <div className="p-4 flex-grow">
-              <p className="text-sm">
-                {" "}
-                <b>TEACHER NAME</b> REQUESTS YOUR FOR <b>CERTIFICATE NAME</b>{" "}
-              </p>
-              <p className="text-right ms-auto"> UPLOAD BUTTON</p>
-            </div>
+            {
+              Array.isArray(requestCertificate) &&
+              requestCertificate.map((certificate) => (
+                <div className="p-4 flex items-center justify-between border-b border-gray-100">
+                  <div>
+                    <p className="text-sm font-semibold"> {certificate.certificateName} </p>
+                  </div>
+                  <div>
+                    <button onClick={() => {
+                      navigate(`/add/${certificate._id}/${certificate.certificateName}`)
+                    }} className="text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md px-3 py-1 text-xs">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ))
+            }
             <hr />
           </div>
         </section>

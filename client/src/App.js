@@ -13,7 +13,7 @@ import StudentList from './Pages/Teacher/StudentList.jsx';
 import Shome from './Pages/Shome';
 import RequestDoc from './Pages/Teacher/RequestDoc.jsx';
 import TeacherHome from './Pages/Teacher/TeacherHome.jsx';
-
+import Student from './Pages/Student.jsx';
 
 
 const App = () => {
@@ -34,12 +34,11 @@ const App = () => {
           <Route path="/" element={<Private />} >
             <Route path="/home" element={<Home />} />
             <Route path="/add" element={<Addp />} />
-
-            <Route path="/studentList" element={<StudentList />} />
+            <Route path="/add/:certificateId/:certificateName" element={<Addp />} />
+            <Route path="/studentList/:id" element={<StudentList />} />
             <Route path="/thome" element={<TeacherHome />} />
-
-
             <Route path="/shome" element={<Shome />} />
+            <Route path="/student/:id" element={<Student />} />
             <Route path="/request" element={<RequestDoc />} />
           </Route>
         </Routes>

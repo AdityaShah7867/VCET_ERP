@@ -8,32 +8,35 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const [auth,setAuth] = useAuth()
+  const [auth, setAuth] = useAuth()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = async (e) => {
-    setAuth({...auth,user:null,token:''})
+    setAuth({ ...auth, user: null, token: '' })
     navigate("/");
     // localStorage.removeItem("token");
     localStorage.removeItem("auth");
   };
 
-  const [user,setUser] = useState({});
+  const [user, setUser] = useState({});
 
 
-    useEffect(()=>{
 
-        axios.get(`${baseURL}/v1/auth/getLoggedinUser`,{
-            headers : {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }})
-            .then((res)=>{
-                setUser(res.data.user)
-                console.log(res.data.user)
-            }).catch((error)=>console.log(error))
-    } ,[] )
+  useEffect(() => {
+
+    axios.get(`${baseURL}/v1/auth/getLoggedinUser`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('auth')}`
+      }
+    })
+      .then((res) => {
+        setUser(res.data.user)
+        console.log(res.data.user)
+      }).catch((error) => console.log(error))
+  }, [])
+
 
   return (
     <div>
@@ -74,63 +77,87 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className={`${
-            isOpen ? 'block' : 'hidden'
-          } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
+          className={`${isOpen ? 'block' : 'hidden'
+            } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
-          {auth.user && (
-          <div className="text-sm lg:flex-grow">
-            <a
-              href="./home"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-            >
-              Home
-            </a>
-            <a
-              href="./add"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-            >
-              Upload Certificate
-            </a>
+          {user && (
+            <div className="text-sm lg:flex-grow">
 
-            <a
-              href="./shome"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-            >
-              Student Dashboard
-            </a>
-           
-          
+              {
+                user.userType === "student" && (
+                  <>
+                    <a
+                      onClick={() => {
+                        navigate('/add')
 
-            <a
-              href="./thome"
-              className="block ml-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-            >
-              TEACHERS DASHBOARD
-            </a>
-         
-          </div>
-        )}
-          { auth.user ? (
-        <div>
-          <a
-            href="#"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </a>
-        </div>
-      ): (
-        <div className="ml-auto">
-          <a
-            href="/" 
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-          >
-            Login
-          </a>
-        </div>
-      )}
+                      }}
+                      className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                      Upload Certificate
+                    </a>
+
+                    <a
+                      onClick={() => {
+                        navigate('/shome')
+
+                      }}
+                      className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                      Student Dashboard
+                    </a>
+                  </>
+
+                )
+              }
+
+
+              {
+                user.userType === "teacher" && (
+                  <>
+                    <a
+                      onClick={() => {
+                        navigate('/thome')
+
+                      }}
+                      className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                      Teacher Dashboard
+                    </a>
+                    <a
+                      onClick={() => {
+                        navigate('/request')
+
+                      }}
+                      className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                      Request Certificates
+                    </a>
+                  </>
+
+                )
+              }
+            </div>
+          )}
+          {auth.user ? (
+            <div>
+              <a
+                href="#"
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+                onClick={handleLogout}
+              >
+                Logout
+              </a>
+            </div>
+          ) : (
+            <div className="ml-auto">
+              <a
+                href="/"
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+              >
+                Login
+              </a>
+            </div>
+          )}
         </div>
       </nav>
     </div>

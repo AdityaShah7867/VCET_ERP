@@ -16,6 +16,26 @@ const getGreeting = () => {
   return greeting;
 };
 
+const year = [
+  {
+    year: 1,
+    branch: "IT"
+  },
+  {
+    year: 2,
+    branch: "IT"
+  },
+  {
+    year: 3,
+    branch: "IT"
+  },
+  {
+    year: 4,
+    branch: "IT"
+  }
+
+]
+
 const TeacherHome = () => {
   const greeting = getGreeting();
 
@@ -24,13 +44,11 @@ const TeacherHome = () => {
       <div className="text-3xl font-bold mb-4">{greeting} : Aditya Shah</div>
 
       <div className="flex flex-wrap m-8 gap-4 p-4">
-        {[1, 2, 3, 4].map((year) => (
+        {year.map((year) => (
 
-            <Card key={year}/>
-        //   <div key={year} className="bg-blue-300 p-4 m-4 rounded-md">
-        //     {`${year} Year`}
-        //   </div>
-
+          <Card key={year}
+            year={year.year} branch={year.branch}
+          />
 
         ))}
       </div>

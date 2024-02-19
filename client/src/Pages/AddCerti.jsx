@@ -4,55 +4,60 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAuth } from "../Context/Auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddP = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+
+  const [price, setPrice] = useState("1");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
   const [auth] = useAuth();
   const navigate = useNavigate();
-
-//   if (auth?.user?.userType !== "student" || auth?.user?.userType !== "admin"){
-     
-//     navigate('/thome');
-
-// }
+  const { certificateId, certificateName } = useParams();
+  const [name, setName] = useState(certificateName ? certificateName : "");
+  const [loading, setloading] = useState(false)
 
   const AddP = async (e) => {
     e.preventDefault();
     try {
+
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("price", price);
-      formData.append("desc", desc);
-      formData.append("file", file); // Append file to FormData
+      formData.append("position", price);
+      formData.append("description", desc);
+      formData.append("certificate", file);
+      if (certificateId) {
+        formData.append("certificateId", certificateId);
+      }
 
+
+
+      setloading(true);
       const response = await axios.post(
-        `${baseURL}/v1/product/AddP`,
+        `${baseURL}/v1/certificates/createCertificates`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file upload
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("auth")}`,
           },
         }
       );
 
-      const { message, Token } = response.data;
-
-      if (response.status === 201) {
-        // navigate('/home');
+      if (response.status === 200) {
         toast.success("Certificate uploaded successfully");
-        localStorage.setItem("token", Token);
+        setloading(false);
+
       } else {
-        toast.error("Product add failed");
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred");
+      toast.error(error.response.data.message);
+      setloading(false);
     }
   };
+
   return (
     <div className="">
       <h1 className="text-2xl text-center mt-8 ">
@@ -69,7 +74,7 @@ const AddP = () => {
                     type="text"
                     id="name"
                     name="name"
-                    value={name}
+                    value={certificateName ? certificateName : name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Competition Name"
                     className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
@@ -78,25 +83,15 @@ const AddP = () => {
                 <div className="md:col-span-2">
 
                   <label>SELECT POSITION</label>
+                  <select
+                    onChange={(e) => setPrice(e.target.value)} id="cars" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" name="cars">
 
-                  {/* <select id="cars" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" name="cars">
+                    <option value="1">1st</option>
+                    <option value="2">2nd</option>
+                    <option value="3">3rd</option>
+                    <option value="Participation">Particiaption</option>
+                  </select>
 
-                    <option value="volvo">1st</option>
-                    <option value="saab">2nd</option>
-                    <option value="fiat">3rd</option>
-                    <option value="audi">Particiaption</option>
-                  </select> */}
-
-
-                  <input
-                    type="text"
-                    value={price}
-                    id="price"
-                    name="price"
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder="Position"
-                    className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
-                  />
                 </div>
 
                 <div className="md:col-span-2">
@@ -106,7 +101,7 @@ const AddP = () => {
                     name="file"
                     placeholder="Charger votre fichier"
                     className="peer block w-full appearance-none border-none   bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
-                    onChange={(e) => setFile(e.target.files[0])} // Handle file change
+                    onChange={(e) => setFile(e.target.files[0])}
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -128,7 +123,7 @@ const AddP = () => {
                     class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     style={{ backgroundColor: "blue" }}
                   >
-                    ADD CERTIFICATE
+                    {loading ? "Loading..." : "Upload"}
                   </button>
                 </div>
               </div>

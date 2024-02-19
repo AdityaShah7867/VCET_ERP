@@ -1,11 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ year, branch }) => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center bg-white w-72 h-auto pt-5 pb-7 border border-gray-200 rounded-lg space-y-8">
       <section className="flex flex-col text-center space-y-1">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-        DEPT INFT
+          DEPT INFT
         </h2>
       </section>
       <section className="space-y-2">
@@ -41,7 +45,9 @@ const Card = ({ year, branch }) => {
         </div>
       </section>
       <section className="flex w-full flex-col space-y-2 px-9">
-        <button className="py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-600">
+        <button onClick={() => {
+          navigate(`/studentlist/${year}`);
+        }} className="py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-600">
           View Certificates
         </button>
       </section>

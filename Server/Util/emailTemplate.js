@@ -1,5 +1,5 @@
-const ReqTemp = (Desc,TeacherName) =>
-` <!DOCTYPE html>
+const ReqTemp = (Desc, TeacherName, websiteURL) =>
+  `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,30 +9,33 @@ const ReqTemp = (Desc,TeacherName) =>
 
   <h2>Subject: Certificate Request Notification</h2>
 
-  <p>Dear USER ,</p>
+  <p>Dear USER,</p>
 
   <p>
-    I hope this email finds you well. We wanted to inform you that your teacher,<b> ${TeacherName} </b>, has requested a certificate on your behalf.
+    I hope this email finds you well. We wanted to inform you that your teacher, <b>${TeacherName}</b>, has requested a certificate on your behalf.
   </p>
- <p>
- ${Desc}
+
+  <p>
+    ${Desc}
   </p> 
 
-  
- 
   <p>Best regards,</p>
   <p>VCET CMS</p>
  
   <p>
-  If you have any specific requirements or if there's additional information needed, Please contat respected teacher.
-</p>
+    If you have any specific requirements or if there's additional information needed, please contact the respected teacher.
+  </p>
 
   <p>
-    THIS IS SYSTEM GENERATED MAIL SO PLEASE DO NOT REPLY.
+    THIS IS A SYSTEM GENERATED MAIL SO PLEASE DO NOT REPLY.
+  </p>
+
+  <p>
+    For more information, visit our website: <a href="${websiteURL}">Click here</a>
   </p>
 
 </body>
-</html>`
+</html>`;
 
 const gmailContent = (verificationToken) => {
   return `
@@ -66,4 +69,4 @@ const successFullVerification = (recipientEmail) => {
 
 
 
-    module.exports = {ReqTemp,gmailContent,successFullVerification}
+module.exports = { ReqTemp, gmailContent, successFullVerification }

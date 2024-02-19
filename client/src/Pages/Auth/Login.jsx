@@ -43,33 +43,32 @@ const Login = () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        localStorage.setItem("auth", JSON.stringify(data));
+        localStorage.setItem("auth", data.token);
         setAuth({ ...auth, user: data.user, token: data.token });
         console.log(data);
         console.log(localStorage.getItem("auth"));
 
         if (data?.user.userType === "student") {
           navigate("/shome");
+          window.location.reload();
           toast.success("Student Login successful!");
           return;
         }
 
         if (data.user.userType === "teacher") {
           navigate("/thome");
+          window.location.reload();
           toast.success(" Teacher Login successful!");
           return;
         }
 
         if (data.user.userType === "admin") {
           navigate("/home");
+          window.location.reload();
           toast.success(" Admin Login successful!");
           return;
         }
 
-        //   navigate("/home");
-        //   // localStorage.setItem('token',token)
-        //   toast.success("Login successful!");
-        //   return
       } else {
         toast.error("Invalid email or password");
         return;
