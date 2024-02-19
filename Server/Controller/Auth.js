@@ -6,7 +6,7 @@ const { generateverificationToken, sendVerificationEmail, SuccessfullyVerified }
 
 const register = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
+        const { email, password, name, year } = req.body;
 
         // if (!email.endsWith('@vcet.edu.in')) {
         //     res.status(400).json({ message: "Invalid email domain. Please use a valid @vcet.edu.in email address." });
@@ -25,7 +25,7 @@ const register = async (req, res) => {
 
         const hashedpassword = await bcrypt.hash(password, 10)
 
-        if (!email || !password) {
+        if (!email || !password || !name || !year) {
             res.status(400).json({ message: "fill all the details" })
             return
         }
@@ -36,6 +36,7 @@ const register = async (req, res) => {
         const newUser = await User.create({
             email: email.toLowerCase(),
             password: hashedpassword,
+            year,
             name,
             verificationToken
         })
@@ -94,7 +95,8 @@ const login = async (req, res) => {
             const token = jwt.sign({
                 id: user.id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                year: user.year,
 
             }, process.env.JWT)
 
@@ -127,5 +129,16 @@ const getLoggedinUser = async (req, res) => {
     }
 }
 
+const getStudentsByYear = async (req, res) => {
+    try {
+        const year = req.params.year
 
-module.exports = { register, login, getLoggedinUser, verifyemail }
+        const students = await User.find({ year: year })
+        res.status(200).json({ students: students })
+    } catch (error) {
+        res.status(501).json({ message: error })
+    }
+}
+
+
+module.exports = { register, login, getLoggedinUser, verifyemail, getStudentsByYear }

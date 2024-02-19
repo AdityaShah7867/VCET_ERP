@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
-const {ReqTemp,successFullVerification,gmailContent} = require('./emailTemplate');
+const { ReqTemp, successFullVerification, gmailContent } = require('./emailTemplate');
 
 
 
-const ReqDoc = async (TeacherName,recipientEmail, desc) => {
+const ReqDoc = async (TeacherName, recipientEmail, desc) => {
     try {
 
         const transporter = nodemailer.createTransport({
@@ -16,7 +16,7 @@ const ReqDoc = async (TeacherName,recipientEmail, desc) => {
             }
         })
 
-        const emailcontent = ReqTemp(desc,TeacherName);
+        const emailcontent = ReqTemp(desc, TeacherName);
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: recipientEmail,
@@ -33,7 +33,7 @@ const ReqDoc = async (TeacherName,recipientEmail, desc) => {
 
 const generateverificationToken = (email) => {
     console.log('token generated jwt')
-    return jwt.sign({ email: email },process.env.JWT, { expiresIn: '1d' })
+    return jwt.sign({ email: email }, process.env.JWT, { expiresIn: '1d' })
 }
 
 
@@ -95,4 +95,4 @@ const SuccessfullyVerified = async (recipientEmail) => {
 
 
 
-module.exports={ReqDoc,generateverificationToken,sendVerificationEmail,SuccessfullyVerified}
+module.exports = { ReqDoc, generateverificationToken, sendVerificationEmail, SuccessfullyVerified }

@@ -13,8 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth()
-
+  const [auth, setAuth] = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,59 +26,53 @@ const Login = () => {
 
       const response = await fetch(`${baseURL}/v1/auth/login`, {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: email,
-          password: password
-        })
-      })
+          password: password,
+        }),
+      });
 
       console.log("1");
       // const { message, token } = response.data;
       if (response.status === 400) {
-        console.log("hello")
+        // console.log("hello")
         toast.error("Please Verify Email First !");
-        return
+        return;
       }
 
       if (response.status === 200) {
-
-        const data = await response.json()
-        localStorage.setItem('auth', JSON.stringify(data))
-        setAuth({ ...auth, user: data.user, token: data.token })
+        const data = await response.json();
+        localStorage.setItem("auth", JSON.stringify(data));
+        setAuth({ ...auth, user: data.user, token: data.token });
         console.log(data);
-        console.log(localStorage.getItem('auth'));
-
+        console.log(localStorage.getItem("auth"));
 
         if (data?.user.userType === "student") {
-          navigate("/shome")
+          navigate("/shome");
           toast.success("Student Login successful!");
-          return
+          return;
         }
 
         if (data.user.userType === "teacher") {
-          navigate("/thome")
+          navigate("/thome");
           toast.success(" Teacher Login successful!");
-          return
+          return;
         }
 
         if (data.user.userType === "admin") {
-          navigate("/home")
+          navigate("/home");
           toast.success(" Admin Login successful!");
-          return
+          return;
         }
 
         //   navigate("/home");
         //   // localStorage.setItem('token',token)
         //   toast.success("Login successful!");
         //   return
-      }
-
-
-
-      else {
+      } else {
         toast.error("Invalid email or password");
-        return
+        return;
       }
     } catch (error) {
       console.error(error);
@@ -119,7 +112,7 @@ const Login = () => {
                   class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                 />
                 <div className="text-center">
-                  <button class="btn text-center " > LOGIN </button>
+                  <button class="btn text-center "> LOGIN </button>
                 </div>
               </div>
             </form>
